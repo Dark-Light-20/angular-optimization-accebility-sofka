@@ -41,7 +41,7 @@ El reto está descrito en detalle en el siguiente documento: [Reto Técnico par
   Esto realiza la configuración inicial necesaria para utilizar las funcionalidades de localización en Angular.
 - Para este reto, como el proyecto ya tiene un idioma base (inglés), se selecciona como idioma adicional el español de Colombia (es-CO).
 - Se identifican los textos estáticos en los archivos de componentes y se envuelven con la directiva `i18n` para marcar estos textos para traducción.
-  - Además, se agrega el operador `$localize` en los archivos TypeScript para los textos estáticos que necesitan ser traducidos.
+  - Además, se agrega el operador `$localize` en los archivos TypeScript para los textos estáticos que necesitan ser traducidos. (por ejemplo el mensaje de error al consultar la API)
 - Se realiza la extracción de los mensajes marcados para traducción utilizando el comando:
   ```bash
     ng extract-i18n --output-path src/locale --format json
@@ -110,15 +110,18 @@ El reto está descrito en detalle en el siguiente documento: [Reto Técnico par
           ├── index.html
           └── ...
   ```
+  Con esto, la aplicación está lista para ser servida en ambos idiomas en un servidor, como Nginx o Apache. Cabe resaltar que el servidor debe estar configurado para servir la carpeta correcta según el idioma preferido por el usuario (por ejemplo, utilizando la cabecera `Accept-Language`).
 - Se puede servir la aplicación en el idioma base (inglés) utilizando el comando:
   ```bash
     npm start
   ```
   La aplicación estará disponible en `http://localhost:4200/`.
   ![App in English](./docs/images/locale-en-us.png)
+  ![Error message in English](./docs/images/error-locale-en-us.png)
 - Se puede servir la aplicación en el idioma español de Colombia utilizando el comando:
   ```bash
     npm run start:es
   ```
   La aplicación estará disponible en `http://localhost:4200/`.
   ![App in Spanish](./docs/images/locale-es-co.png)
+  ![Error message in Spanish](./docs/images/error-locale-es-co.png)
