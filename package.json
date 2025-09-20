@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
+    "start:es": "ng serve --configuration=es-CO --host 0.0.0.0",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
@@ -35,6 +36,7 @@
     "@angular-devkit/build-angular": "^16.2.16",
     "@angular/cli": "^16.2.16",
     "@angular/compiler-cli": "^16.2.0",
+    "@angular/localize": "^16.2.12",
     "@nguniversal/builders": "^16.2.0",
     "@types/express": "^4.17.0",
     "@types/jasmine": "~4.3.0",

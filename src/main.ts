@@ -1,5 +1,6 @@
+/// <reference types="@angular/localize" />
+
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
 
 import { AppModule } from './app/app.module';
 
@@ -8,5 +9,6 @@ if (typeof window !== 'undefined' && (window as any).ng) {
   (window as any).ng.enableDebugTools = true;
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => console.error(err));

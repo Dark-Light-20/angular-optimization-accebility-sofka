@@ -1,0 +1,19 @@
+{
+  "locale": "en-US",
+  "translations": {
+    "947954863326632466": "Data provided by",
+    "3926071527451585541": "Explore the Multiverse",
+    "1549129012498388067": " Discover all the crazy characters from Rick and Morty! ",
+    "7930765635701812296": "Loading characters from the multiverse...",
+    "870946061364475719": " Try Again ",
+    "5922749884294693284": "Species:",
+    "2736556170366900089": "Type:",
+    "6283914624769804238": "Gender:",
+    "3633846246951934378": "Last known location:",
+    "34345812090894853": "First seen in:",
+    "1963572893950133556": " ← Previous ",
+    "5881876145178332550": "of",
+    "7460903712067655939": " Next → ",
+    "240993378622704758": "Error loading characters. Please try again."
+  }
+}

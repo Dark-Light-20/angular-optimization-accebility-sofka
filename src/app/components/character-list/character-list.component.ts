@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { RickMortyService, Character, ApiResponse } from '../../services/rick-morty.service';
+import {
+  ApiResponse,
+  Character,
+  RickMortyService,
+} from '../../services/rick-morty.service';
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
-  styleUrls: ['./character-list.component.css']
+  styleUrls: ['./character-list.component.css'],
 })
 export class CharacterListComponent implements OnInit {
   characters: Character[] = [];
@@ -13,7 +17,7 @@ export class CharacterListComponent implements OnInit {
   currentPage = 1;
   totalPages = 1;
 
-  constructor(private readonly rickMortyService: RickMortyService) { }
+  constructor(private readonly rickMortyService: RickMortyService) {}
 
   ngOnInit(): void {
     this.loadCharacters();
@@ -31,10 +35,10 @@ export class CharacterListComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Error loading characters. Please try again.';
+        this.error = $localize`Error loading characters. Please try again.`;
         this.loading = false;
         console.error('Error:', error);
-      }
+      },
     });
   }
 

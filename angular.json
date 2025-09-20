@@ -16,18 +16,12 @@
             "outputPath": "dist/angular-sofkau/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": []
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
+            "scripts": [],
+            "localize": true
           },
           "configurations": {
             "production": {
@@ -51,7 +45,17 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "localize": ["en-US"]
+            },
+            "es-CO": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "localize": ["es-CO"]
             }
           },
           "defaultConfiguration": "production"
@@ -64,6 +68,9 @@
             },
             "development": {
               "browserTarget": "angular-sofkau:build:development"
+            },
+            "es-CO": {
+              "browserTarget": "angular-sofkau:build:es-CO"
             }
           },
           "defaultConfiguration": "development"
@@ -77,18 +84,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         },
@@ -130,9 +129,7 @@
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {
@@ -145,6 +142,18 @@
             }
           },
           "defaultConfiguration": "production"
+        }
+      },
+      "i18n": {
+        "sourceLocale": {
+          "code": "en-US",
+          "baseHref": "/"
+        },
+        "locales": {
+          "es-CO": {
+            "translation": "src/locale/messages.es-CO.json",
+            "baseHref": "/es/"
+          }
         }
       }
     }
