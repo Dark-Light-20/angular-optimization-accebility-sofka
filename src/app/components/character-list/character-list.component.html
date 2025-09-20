@@ -1,7 +1,7 @@
 <div class="character-container">
   <h1>Explore the Multiverse</h1>
   <p class="subtitle">Discover all the crazy characters from Rick and Morty!</p>
-  
+
   <div *ngIf="loading" class="loading">
     <div class="portal-loader">
       <div class="portal-ring"></div>
@@ -10,18 +10,30 @@
     </div>
     <p>Loading characters from the multiverse...</p>
   </div>
-  
+
   <div *ngIf="error" class="error">
     <p>{{ error }}</p>
-    <button (click)="loadCharacters(currentPage)" class="retry-btn">Try Again</button>
+    <button (click)="loadCharacters(currentPage)" class="retry-btn">
+      Try Again
+    </button>
   </div>
-  
+
   <div *ngIf="!loading && !error" class="characters-grid">
     <div *ngFor="let character of characters" class="character-card">
       <div class="character-image-container">
-        <img [src]="character.image" [alt]="character.name" class="character-image">
+        <img
+          [ngSrc]="character.image"
+          [alt]="character.name"
+          priority
+          width="350"
+          height="200"
+          class="character-image"
+        />
         <div class="character-overlay">
-          <span class="status-indicator" [ngClass]="getStatusClass(character.status)">
+          <span
+            class="status-indicator"
+            [ngClass]="getStatusClass(character.status)"
+          >
             {{ character.status }}
           </span>
         </div>
@@ -43,11 +55,11 @@
           </div>
           <div class="location-info">
             <p class="location">
-              <strong>Last known location:</strong><br>
+              <strong>Last known location:</strong><br />
               <span class="location-name">{{ character.location.name }}</span>
             </p>
             <p class="origin">
-              <strong>First seen in:</strong><br>
+              <strong>First seen in:</strong><br />
               <span class="origin-name">{{ character.origin.name }}</span>
             </p>
           </div>
@@ -55,25 +67,27 @@
       </div>
     </div>
   </div>
-  
+
   <div *ngIf="!loading && !error" class="pagination">
-    <button 
-      (click)="previousPage()" 
+    <button
+      (click)="previousPage()"
       [disabled]="currentPage === 1"
-      class="pagination-btn prev-btn">
+      class="pagination-btn prev-btn"
+    >
       ← Previous
     </button>
-    
+
     <div class="page-info">
       <span class="page-current">{{ currentPage }}</span>
       <span class="page-separator">of</span>
       <span class="page-total">{{ totalPages }}</span>
     </div>
-    
-    <button 
-      (click)="nextPage()" 
+
+    <button
+      (click)="nextPage()"
       [disabled]="currentPage === totalPages"
-      class="pagination-btn next-btn">
+      class="pagination-btn next-btn"
+    >
       Next →
     </button>
   </div>

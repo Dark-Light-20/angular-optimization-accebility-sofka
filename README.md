@@ -1,27 +1,33 @@
-# AngularSofkau
+# Reto Técnico - Optimización y Accesibilidad en Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+## Descripción
 
-## Development server
+Este proyecto es una aplicación web desarrollada con Angular que consume la API pública de Rick and Morty para mostrar una lista de personajes. El objetivo principal de este reto es mejorar el rendimiento y la accesibilidad de la aplicación mediante diversas optimizaciones en esta aplicación.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+El reto está descrito en detalle en el siguiente documento: [Reto Técnico para Workshop L3](./Reto%20Técnico%20para%20Workshop%20L3.pdf).
 
-## Code scaffolding
+## Requisitos
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js y npm instalados en la máquina.
+- Angular CLI instalado globalmente.
+- Se realiza checkout a la rama base `feature/unit-test`:
+  ```bash
+    git checkout feature/unit-test
+  ```
+- Instalar las dependencias del proyecto:
+  ```bash
+    npm ci
+  ```
 
-## Build
+## Retos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### **1. Optimización de Imágenes con `ngSrc`**:
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Se realiza un análisis con lighthouse para identificar problemas de rendimiento relacionados con las imágenes.
+  - Se observa que hay una imagen crítica la cual es la cabecera de cada personaje, la cual impacta negativamente en el LCP (Largest Contentful Paint). Se puede ver el reporte detallado aquí: [LCP report](./docs/lighthouse-reports/1-lighthouse-previous.pdf)
+    ![LCP discover](./docs/images/analysis-1-LCP.png)
+- Se importa la directiva `NgOptimizedImage` en el archivo `app.module.ts` para habilitar la optimización de imágenes en Angular.
+- Se realiza el reemplazo en las etiquetas `<img>` el atributo `src` por la directiva `ngSrc` de Angular para mejorar la carga y el rendimiento de las imágenes.
+- Se especifican los atributos `width`, `height` para todas las imagenes con valores adecuados, y además se agrega el atributo `priority` para optimizar la carga de la imagen crítica reportada en el alto LCP desde lighthouse.
+- Se vuelve a ejecutar el análisis con lighthouse para verificar las mejoras en el rendimiento. Se observa una mejora significativa en el rendimiento, pasando de 35% a 44%. Se puede ver el reporte detallado aquí: [LCP improved report](./docs/lighthouse-reports/1-lighthouse-previous)
+  ![LCP improved](./docs/images/analysis-2-LCP.png)
