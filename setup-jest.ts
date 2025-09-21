@@ -6,15 +6,15 @@ Object.defineProperty(window, 'localStorage', {
     getItem: jest.fn(() => null),
     setItem: jest.fn(() => null),
     removeItem: jest.fn(() => null),
-    clear: jest.fn(() => null)
+    clear: jest.fn(() => null),
   },
-  writable: true
+  writable: true,
 });
 
 // Mock para matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -32,3 +32,13 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
+
+// Agregar TextEncoder y TextDecoder al ámbito global
+import { TextDecoder, TextEncoder } from 'util';
+Object.defineProperties(globalThis, {
+  TextDecoder: { value: TextDecoder },
+  TextEncoder: { value: TextEncoder },
+});
+
+// Importar localize para pruebas que involucren internacionalización
+import '@angular/localize/init';

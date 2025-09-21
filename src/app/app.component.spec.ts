@@ -1,23 +1,21 @@
+import { NgOptimizedImage } from '@angular/common';
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Mock del CharacterListComponent
 @Component({
   selector: 'app-character-list',
-  template: '<div>Character List Mock</div>'
+  template: '<div>Character List Mock</div>',
 })
-class MockCharacterListComponent { }
+class MockCharacterListComponent {}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [
-        AppComponent,
-        MockCharacterListComponent
-      ]
+      imports: [RouterTestingModule, NgOptimizedImage],
+      declarations: [AppComponent, MockCharacterListComponent],
     }).compileComponents();
   });
 
@@ -58,7 +56,9 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     const footer = compiled.querySelector('.footer-text');
-    expect(footer?.textContent).toContain('2025 Rick and Morty Character Explorer');
+    expect(footer?.textContent).toContain(
+      '2025 Rick and Morty Character Explorer'
+    );
     expect(footer?.textContent).toContain('The Rick and Morty API');
   });
 });
