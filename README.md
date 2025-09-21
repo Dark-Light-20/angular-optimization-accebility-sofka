@@ -130,11 +130,25 @@ El reto está descrito en detalle en el siguiente documento: [Reto Técnico par
 
 #### Adecuaciones
 
-Debido a que se agregó la optimización de imágenes y la internacionalización en la aplicación, se debe hacer algunos ajustes en las pruebas unitarias para que estas funcionen correctamente.
+Debido a la incorporación de la optimización de imágenes y la internacionalización en la aplicación, fue necesario realizar algunos ajustes en las pruebas unitarias para garantizar su correcto funcionamiento.
 
-- Se agrega la importación de la directiva `NgOptimizedImage` en los archivos de pruebas unitarias donde se utilizan imágenes optimizadas dentro de la sección de imports del `TestBed.configureTestingModule`.
-- Se modifica el archivo `setup-jest.ts` para incluir la configuración necesaria para manejar la internacionalización en las pruebas unitarias. Se agrega el siguiente código al archivo:
+- Se añadió la importación de la directiva `NgOptimizedImage` en los archivos de pruebas unitarias donde se utilizan imágenes optimizadas, dentro de la sección de imports de `TestBed.configureTestingModule`.
+- Se actualizó el archivo `setup-jest.ts` para incluir la configuración necesaria que permite manejar la internacionalización en las pruebas unitarias. Se agregó el siguiente código:
   ```typescript
   import "@angular/localize/init";
   ```
   Esto asegura que las funciones de localización estén disponibles durante la ejecución de las pruebas.
+
+#### Nuevas pruebas
+
+Dado que el proyecto parte de una cobertura del 100% en las pruebas unitarias y que Jest solo valida la parte lógica de los componentes (es decir, sus archivos TypeScript), se adopta un enfoque diferente para realizar pruebas de integración entre la lógica del componente y su template visual. El objetivo es verificar que la información cargada en el componente se visualice correctamente en el DOM, en los lugares esperados y con los valores correctos.
+
+Por lo tanto, se han creado nuevas pruebas unitarias para asegurar que la renderización de cada personaje se realice correctamente en la plantilla del componente. Esto se logra implementando consultas a los DebugElements que ofrece TestBed durante el ciclo de vida del componente. Se realizan consultas CSS a los DebugElements para buscar elementos en el DOM que posean ciertas clases definidas para cada dato visual, y posteriormente se hacen aserciones para comprobar que dichos elementos del DOM contienen los valores correspondientes al personaje cargado en la variable del componente.
+
+Las pruebas implementadas son las siguientes:
+
+1. **should render all character cards elements**: Verifica que se rendericen todas las tarjetas de personajes según la respuesta de la API.
+2. **should render character images with correct data**: Verifica que se renderice correctamente la visualización de cada personaje presente en el array `component.characters`, compuesto por un elemento de imagen del personaje y un elemento tipo span con el estado del personaje (vivo, muerto, desconocido).
+3. **should render character info with correct data**: Verifica que se renderice correctamente la información de cada personaje en el array `component.characters`, que incluye un título de nivel 3 con el nombre del personaje, un contenedor con varios elementos tipo span para la especie, tipo (no siempre presente) y género, y otro contenedor con elementos tipo span para la última ubicación conocida y el origen del personaje.
+
+Estas pruebas se encuentran en el archivo `character-list.component.spec.ts`, en las líneas 255, 265 y 294 respectivamente.

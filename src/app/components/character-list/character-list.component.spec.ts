@@ -1,5 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import {
   ApiResponse,
@@ -241,6 +242,99 @@ describe('CharacterListComponent', () => {
 
       expect(() => fixture.detectChanges()).not.toThrow();
       expect(component).toBeTruthy();
+    });
+  });
+
+  describe('Character rendering', () => {
+    beforeEach(() => {
+      // Simulate existing characters loaded
+      mockRickMortyService.getCharacters.mockReturnValue(of(mockApiResponse));
+      fixture.detectChanges();
+    });
+
+    it('should render all character cards elements', () => {
+      const gridContainer = fixture.debugElement.query(
+        By.css('.characters-grid')
+      );
+      expect(gridContainer).toBeTruthy();
+
+      const characterCards = gridContainer.queryAll(By.css('.character-card'));
+      expect(characterCards.length).toBe(component.characters.length);
+    });
+
+    it('should render character images with correct data', () => {
+      // Extract all character image containers
+      const imagesContainers = fixture.debugElement.queryAll(
+        By.css('.character-image-container')
+      );
+
+      component.characters.forEach((character, index) => {
+        const characterImageContainer = imagesContainers[index];
+        expect(characterImageContainer).toBeTruthy();
+
+        const imageElement = characterImageContainer.query(
+          By.css('img.character-image')
+        );
+        expect(imageElement.attributes['src']).toBe(character.image);
+        expect(imageElement.attributes['alt']).toBe(character.name);
+        expect(imageElement.attributes['priority']).toBeDefined();
+
+        const statusIndicator = characterImageContainer.query(
+          By.css('.status-indicator')
+        );
+        expect(statusIndicator).toBeTruthy();
+        const expectedClass = component.getStatusClass(character.status);
+        expect(statusIndicator.classes[expectedClass]).toBe(true);
+        expect(
+          (statusIndicator.nativeElement as HTMLElement).textContent
+        ).toContain(character.status);
+      });
+    });
+
+    it('should render character details correctly', () => {
+      const infoContainers = fixture.debugElement.queryAll(
+        By.css('.character-info')
+      );
+
+      component.characters.forEach((character, index) => {
+        const infoContainer = infoContainers[index];
+        expect(infoContainer).toBeTruthy();
+
+        const nameElement = infoContainer.query(By.css('h3.character-name'));
+        expect(nameElement).toBeTruthy();
+        expect(nameElement.nativeElement.textContent).toBe(character.name);
+
+        const detailsContainer = infoContainer.query(
+          By.css('.character-details')
+        );
+        expect(detailsContainer).toBeTruthy();
+
+        const detailsValues = detailsContainer
+          .queryAll(By.css('span.detail-value'))
+          .map((detail) => detail.nativeElement.textContent);
+        expect(detailsValues).toContain(character.species);
+        if (character.type) {
+          expect(detailsValues).toContain(character.type);
+        }
+        expect(detailsValues).toContain(character.gender);
+
+        const locationContainer = infoContainer.query(By.css('.location-info'));
+        expect(locationContainer).toBeTruthy();
+
+        const locationName = locationContainer.query(
+          By.css('span.location-name')
+        );
+        expect(locationName).toBeTruthy();
+        expect(locationName.nativeElement.textContent).toBe(
+          character.location.name
+        );
+
+        const originName = locationContainer.query(By.css('span.origin-name'));
+        expect(originName).toBeTruthy();
+        expect(originName.nativeElement.textContent).toBe(
+          character.origin.name
+        );
+      });
     });
   });
 });
