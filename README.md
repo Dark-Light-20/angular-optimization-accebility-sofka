@@ -29,6 +29,7 @@ El reto está descrito en detalle en el siguiente documento: [Reto Técnico par
 - Se importa la directiva `NgOptimizedImage` en el archivo `app.module.ts` para habilitar la optimización de imágenes en Angular.
 - Se reemplaza en las etiquetas `<img>` el atributo `src` por la directiva `ngSrc` de Angular para mejorar la carga y el rendimiento de las imágenes.
 - Se especifican los atributos `width` y `height` para todas las imágenes con valores adecuados, y además se agrega el atributo `priority` para optimizar la carga de la imagen crítica reportada con alto LCP por Lighthouse.
+- Como la directiva aplica por defecto lazy loading a las imágenes que no tienen el atributo `priority`, no es necesario realizar modificaciones.
 - Se vuelve a ejecutar el análisis con Lighthouse para verificar las mejoras en el rendimiento. Se observa una mejora significativa en el rendimiento, pasando del 35% al 44%. Se puede ver el reporte detallado aquí: [LCP improved report](./docs/lighthouse-reports/1-lighthouse-previous)
   ![LCP improved](./docs/images/analysis-2-LCP.png)
 
