@@ -141,14 +141,31 @@ Debido a la incorporación de la optimización de imágenes y la internacionaliz
 
 #### Nuevas pruebas
 
-Dado que el proyecto parte de una cobertura del 100% en las pruebas unitarias y que Jest solo valida la parte lógica de los componentes (es decir, sus archivos TypeScript), se adopta un enfoque diferente para realizar pruebas de integración entre la lógica del componente y su template visual. El objetivo es verificar que la información cargada en el componente se visualice correctamente en el DOM, en los lugares esperados y con los valores correctos.
+Dado que el proyecto parte de una cobertura del 100% en las pruebas unitarias y que Jest solo valida la parte lógica de los componentes (es decir, sus archivos TypeScript), se adoptó un enfoque diferente para realizar pruebas de integración entre la lógica del componente y su template visual. El objetivo es verificar que la información cargada en el componente se visualice correctamente en el DOM, en los lugares esperados y con los valores correctos.
 
-Por lo tanto, se han creado nuevas pruebas unitarias para asegurar que la renderización de cada personaje se realice correctamente en la plantilla del componente. Esto se logra implementando consultas a los DebugElements que ofrece TestBed durante el ciclo de vida del componente. Se realizan consultas CSS a los DebugElements para buscar elementos en el DOM que posean ciertas clases definidas para cada dato visual, y posteriormente se hacen aserciones para comprobar que dichos elementos del DOM contienen los valores correspondientes al personaje cargado en la variable del componente.
+Por ello, se han creado nuevas pruebas unitarias y de integración para asegurar lo siguiente:
 
-Las pruebas implementadas son las siguientes:
+- Validar que la renderización de cada personaje se realiza correctamente en la plantilla del componente. Para ello, se implementan consultas a los DebugElements que ofrece TestBed durante el ciclo de vida del componente. Se utilizan selectores CSS para buscar elementos en el DOM con clases específicas para cada dato visual, y posteriormente se hacen aserciones para comprobar que dichos elementos contienen los valores correspondientes al personaje cargado en la variable del componente.
+- Validar que la interacción del usuario con los botones de paginación ejecuta correctamente los métodos de la lógica del componente encargados de cambiar de página, asegurando que los llamados se realicen como se espera ante la acción del usuario. A estos botones se les agregaron atributos extra para mejorar su accesibilidad, como `aria-label` y `aria-disabled`, y se utilizan estos atributos en las consultas con TestBed para verificar su estado e interacción.
+- Validar la integración completa entre la lógica del componente, el servicio HTTP de consulta y la renderización visual, asegurando que al cargar los personajes desde la API, estos se rendericen correctamente en el DOM con los valores esperados. Además, se verifica que el mensaje de error se muestre correctamente en el DOM cuando la consulta a la API falla.
+
+Las nuevas pruebas implementadas son las siguientes:
 
 1. **should render all character cards elements**: Verifica que se rendericen todas las tarjetas de personajes según la respuesta de la API.
-2. **should render character images with correct data**: Verifica que se renderice correctamente la visualización de cada personaje presente en el array `component.characters`, compuesto por un elemento de imagen del personaje y un elemento tipo span con el estado del personaje (vivo, muerto, desconocido).
-3. **should render character info with correct data**: Verifica que se renderice correctamente la información de cada personaje en el array `component.characters`, que incluye un título de nivel 3 con el nombre del personaje, un contenedor con varios elementos tipo span para la especie, tipo (no siempre presente) y género, y otro contenedor con elementos tipo span para la última ubicación conocida y el origen del personaje.
+2. **should render character images with correct data**: Verifica que se renderice correctamente la visualización de cada personaje presente en el array `component.characters`, compuesto por un elemento de imagen y un elemento tipo span con el estado del personaje (vivo, muerto, desconocido).
+3. **should render character info with correct data**: Verifica que se renderice correctamente la información de cada personaje en el array `component.characters`, que incluye un título de nivel 3 con el nombre, un contenedor con varios elementos tipo span para la especie, tipo (no siempre presente) y género, y otro contenedor con elementos tipo span para la última ubicación conocida y el origen.
+4. **should call previousPage on previous button click**: Verifica que al hacer clic en el botón "Previous" se llame al método `previousPage` del componente.
+5. **should call nextPage on next button click**: Verifica que al hacer clic en el botón "Next" se llame al método `nextPage` del componente.
+6. **should load characters from service**: Verifica la integración completa entre la lógica del componente, el servicio HTTP y la renderización visual. Se asegura que al cargar los personajes desde la API (usando un mock con HttpTestingController), estos se rendericen correctamente en el DOM con los valores esperados.
+7. **should handle service error**: Verifica que al simular un fallo en la consulta a la API (usando HttpTestingController para devolver un error 500), el mensaje de error y el botón para reintentar se muestren correctamente en el DOM.
+8. **should retry loading characters on Try Again button click**: Verifica que al hacer clic en el botón "Try Again" después de un error en la consulta a la API, se intente nuevamente cargar los personajes llamando al método `loadCharacters` del componente, y que estos se rendericen correctamente en el DOM.
 
-Estas pruebas se encuentran en el archivo `character-list.component.spec.ts`, en las líneas 255, 265 y 294 respectivamente.
+#### Resultados
+
+##### Ejecución de pruebas
+
+![New tests](./docs/images/tests-ok.png)
+
+##### Nuevas pruebas
+
+![All tests passed](./docs/images/describe-tests-character-list.png)

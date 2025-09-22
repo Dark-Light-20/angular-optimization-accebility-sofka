@@ -15,7 +15,12 @@
 
   <div *ngIf="error" class="error">
     <p>{{ error }}</p>
-    <button (click)="loadCharacters(currentPage)" class="retry-btn" i18n>
+    <button
+      (click)="loadCharacters(currentPage)"
+      class="retry-btn"
+      aria-label="Try Again"
+      i18n
+    >
       Try Again
     </button>
   </div>
@@ -75,6 +80,8 @@
       (click)="previousPage()"
       [disabled]="currentPage === 1"
       class="pagination-btn prev-btn"
+      aria-label="Previous page"
+      [attr.aria-disabled]="currentPage === 1 ? 'true' : 'false'"
       i18n
     >
       ← Previous
@@ -90,6 +97,8 @@
       (click)="nextPage()"
       [disabled]="currentPage === totalPages"
       class="pagination-btn next-btn"
+      aria-label="Next page"
+      [attr.aria-disabled]="currentPage === totalPages ? 'true' : 'false'"
       i18n
     >
       Next →
